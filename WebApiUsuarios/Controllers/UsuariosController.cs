@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Excepciones;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -49,8 +50,27 @@ namespace WebApiUsuarios.Controllers
 
         // POST api/<UsuariosController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] Usuario usuario)
         {
+            try
+            {
+                List<UsuarioRol> usuarioRoles = new List<UsuarioRol>();
+                UsuarioRol ur = new UsuarioRol();
+                ur.RolId = 3;
+                usuarioRoles.Add(ur);
+                usuario.UsuarioRol = usuarioRoles;
+                if (usuario == null) return BadRequest("Body vacío");               
+                RepoUsuarios.Add(usuario);
+                return Created("api/Usuarios/" + usuario.Id, usuario);
+            }
+            catch (UsuarioException e)
+            {
+                return BadRequest(e.Message); ;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         // PUT api/<UsuariosController>/5

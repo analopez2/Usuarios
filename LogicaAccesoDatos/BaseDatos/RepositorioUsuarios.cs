@@ -17,9 +17,11 @@ namespace LogicaAccesoDatos.BaseDatos
         {
             Contexto = ctx;
         }
-        public void Add(Usuario obj)
+        public void Add(Usuario nuevo)
         {
-            throw new NotImplementedException();
+            nuevo.Validar();
+            Contexto.Add(nuevo);
+            Contexto.SaveChanges();
            
         }
 
