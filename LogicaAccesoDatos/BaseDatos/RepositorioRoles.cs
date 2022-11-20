@@ -2,12 +2,19 @@
 using LogicaNegocio.InterfacesRepositorios;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace LogicaAccesoDatos.BaseDatos
 {
     public class RepositorioRoles : IRepositorioRoles
     {
+        public DbContextUsuarios Contexto { get; set; }
+
+        public RepositorioRoles(DbContextUsuarios ctx)
+        {
+            Contexto = ctx;
+        }
         public void Add(Rol obj)
         {
             throw new NotImplementedException();
@@ -15,12 +22,12 @@ namespace LogicaAccesoDatos.BaseDatos
 
         public IEnumerable<Rol> FindAll()
         {
-            throw new NotImplementedException();
+            return Contexto.Roles.ToList();
         }
 
         public Rol FindById(int Id)
         {
-            throw new NotImplementedException();
+            return Contexto.Roles.Where(r => r.Id == Id).SingleOrDefault();
         }
 
         public void Remove(int Id)

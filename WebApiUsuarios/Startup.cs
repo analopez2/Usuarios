@@ -9,6 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LogicaAccesoDatos.BaseDatos;
+using Microsoft.EntityFrameworkCore;
+using LogicaNegocio.InterfacesRepositorios;
 
 namespace WebApiUsuarios
 {
@@ -24,7 +27,15 @@ namespace WebApiUsuarios
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+             .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling =
+                                                    Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+            string strCon = Configuration.GetConnectionString("ConeccionAlvaro");
+            services.AddDbContext<DbContextUsuarios>(options => options.UseSqlServer(strCon));
+
+            services.AddScoped<IRepositorioRoles, RepositorioRoles>();
+            services.AddScoped<IRepositorioUsuarios, RepositorioUsuarios>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
