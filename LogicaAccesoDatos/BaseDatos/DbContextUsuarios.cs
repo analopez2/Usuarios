@@ -15,5 +15,15 @@ namespace LogicaAccesoDatos.BaseDatos
         {
 
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            
+
+            modelBuilder.Entity<UsuarioRol>().HasKey(ur=> new { ur.RolId, ur.UsuarioId });
+
+           
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
