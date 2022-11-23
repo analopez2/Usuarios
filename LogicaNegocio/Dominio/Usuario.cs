@@ -4,13 +4,16 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.ComponentModel.DataAnnotations;
+
 
 namespace LogicaNegocio.Dominio
 {
     public class Usuario : IValidable
     {
         public int Id { get; set; }
-        public string Password { get; set; }    
+        public string Password { get; set; }  
+        
         public string Email { get; set; }
         public IEnumerable<UsuarioRol> UsuarioRol{ get; set; }
         public void Validar()

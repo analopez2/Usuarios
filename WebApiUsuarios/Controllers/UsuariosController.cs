@@ -59,16 +59,20 @@ namespace WebApiUsuarios.Controllers
                 ur.RolId = 3;
                 usuarioRoles.Add(ur);
                 usuario.UsuarioRol = usuarioRoles;
-                if (usuario == null) return BadRequest("Body vacío");               
+                if (usuario == null) return BadRequest("Body vacío");
+                if (RepoUsuarios.FindByEmail(usuario.Email) != null) throw new UsuarioException("Ya esta registrado el Email");
                 RepoUsuarios.Add(usuario);
                 return Created("api/Usuarios/" + usuario.Id, usuario);
             }
             catch (UsuarioException e)
-            {
-                return BadRequest(e.Message); ;
+            {         
+                return BadRequest(e.Message); 
             }
             catch (Exception ex)
+
             {
+              
+               
                 return StatusCode(500, ex.Message);
             }
         }
