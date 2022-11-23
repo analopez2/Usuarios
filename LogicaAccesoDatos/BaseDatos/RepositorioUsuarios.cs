@@ -35,6 +35,10 @@ namespace LogicaAccesoDatos.BaseDatos
         {
             return Contexto.Usuarios.Where(u => u.Id==Id).SingleOrDefault();
         }
+        public Usuario FindByEmail(string eMail)
+        {
+            return Contexto.Usuarios.Where(u => u.Email == eMail).SingleOrDefault();
+        }
 
         public void Remove(int Id)
         {
